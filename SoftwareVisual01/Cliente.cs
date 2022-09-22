@@ -13,8 +13,5 @@ namespace Union
         public string? nome {get; set;}
         public string? numeroCelular {get; set;}
         public string? email {get; set;}
-
-
-
     }
 }
