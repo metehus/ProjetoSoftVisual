@@ -66,8 +66,12 @@ namespace Union
 			
 			var appAtendimento = builder.Build();
             */
-
-            //app.Run();
+		/*
+			appCliente.Run();
+			appFuncionario.Run();
+			appAtendimento.Run();
+		*/
+            
         }
 
     }
