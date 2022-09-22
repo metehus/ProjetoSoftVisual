@@ -8,7 +8,7 @@ namespace Union
 {
     class Atendimento
     {
-        public int id;
+        public uint id;
         public Cliente? cliente;
         public Funcionario? funcionario;
         public enum tipoServico
