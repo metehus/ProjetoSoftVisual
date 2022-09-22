@@ -45,7 +45,7 @@ namespace Union
     {
         static void main(String[] args)
         {
-            /*
+           /*
             var builder = WebApplication.CreateBuilder(args);
 			
 			//Conexão com o banco Cliente.db
@@ -65,13 +65,51 @@ namespace Union
 			builder.Services.AddSqlite<BaseAtendimento>(connectionAtendimento);
 			
 			var appAtendimento = builder.Build();
-            */
-		/*
+            
+
+            //apresentar Atendimentos
+			appAtendimento.MapGet("/atendimento", (BaseAtendimento baseAtendimento) => {
+				return baseAtendimento.Atendimento.ToList();
+			});
+			
+			//apresentar Atendimento especifico
+			appAtendimento.MapGet("/atendimento/{id}", (BaseAtendimento baseAtendimento, int id) => {
+				return baseAtendimento.Atendimento.Find(id);
+			});
+			
+			//registrar Atendimento
+			appAtendimento.MapPost("/registrar", (BaseAtendimento baseAtendimento, Atendimento atendimento) =>
+			{
+				baseAtendimento.Atendimento.Add(atendimento);
+				baseAtendimento.SaveChanges();
+				return "Atendimento registrado";
+			});
+			
+			//atualizar Atendimento
+			appAtendimento.MapPost("/atualizar/{id}", (BaseAtendimento baseAtendimento, Atendimento.Construtor atendimentoAtualizado, int id) =>
+			{
+				var atendimento = baseAtendimento.Atendimento.Find(id);
+				atendimento.cliente = atendimentoAtualizado.cliente;
+				atendimento.funcionario = atendimentoAtualizado.funcionario;
+                atendimento.tipoServico = atendimentoAtualizado.tipoServico;
+				baseAtendimento.SaveChanges();
+				return "Atendimento atualizado";
+			});
+						
+			//deletar usuario
+			appAtendimento.MapPost("/deletar/{id}", (BaseAtendimento baseAtendimento, int id) =>
+			{
+				var usuario = baseAtendimento.Atendimento.Find(id);
+				baseAtendimento.Remove(usuario);
+				baseAtendimento.SaveChanges();
+				return "Atendimento deletado";
+			});
+
+		
 			appCliente.Run();
 			appFuncionario.Run();
 			appAtendimento.Run();
-		*/
-            
+            */
         }
 
     }
