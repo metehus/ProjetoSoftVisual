@@ -48,10 +48,23 @@ namespace Union
             /*
             var builder = WebApplication.CreateBuilder(args);
 			
-			var connectionString = builder.Configuration.GetConnectionString("Usuarios") ?? "Data Source=Usuarios.db";
-			builder.Services.AddSqlite<BaseUsuarios>(connectionString);
+			//Conexão com o banco Cliente.db
+			var connectionCliente = builder.Configuration.GetConnectionString("Cliente") ?? "Data Source=Cliente.db";
+			builder.Services.AddSqlite<BaseCliente>(connectionCliente);
 			
-			var app = builder.Build();
+			var appCliente = builder.Build();
+			
+			//Conexão com o banco Funcionario.db
+			var connectionFuncionario = builder.Configuration.GetConnectionString("Funcionario") ?? "Data Source=Funcionario.db";
+			builder.Services.AddSqlite<BaseFuncionario>(connectionFuncionario);
+			
+			var appFuncionario = builder.Build();
+			
+			//Conexão com o banco Atendimento.db
+			var connectionAtendimento = builder.Configuration.GetConnectionString("Atendimento") ?? "Data Source=Atendimento.db";
+			builder.Services.AddSqlite<BaseAtendimento>(connectionAtendimento);
+			
+			var appAtendimento = builder.Build();
             */
 
             //app.Run();
