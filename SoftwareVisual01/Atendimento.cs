@@ -19,16 +19,12 @@ namespace Union
                 outros tipos de serviços ...
             */
         };
-        public class Construtor { 
-
+        public class Construtor 
+        { 
             public int id {get; set;}
             public Cliente? cliente {get; set;}
             public Funcionario? funcionario {get; set;}
             public tipoServico tipoServico {get; set;} 
-            
-            }
-
-
-
+        }
     }
 }
