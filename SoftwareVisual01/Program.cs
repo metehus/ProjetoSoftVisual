@@ -73,7 +73,7 @@ namespace Union
 			});
 			
 			//apresentar Atendimento especifico
-			appAtendimento.MapGet("/atendimento/{id}", (BaseAtendimento baseAtendimento, int id) => {
+			appAtendimento.MapGet("/atendimento/{id}", (BaseAtendimento baseAtendimento, uint id) => {
 				return baseAtendimento.Atendimento.Find(id);
 			});
 			
@@ -86,7 +86,7 @@ namespace Union
 			});
 			
 			//atualizar Atendimento
-			appAtendimento.MapPost("/atualizar/{id}", (BaseAtendimento baseAtendimento, Atendimento.Construtor atendimentoAtualizado, int id) =>
+			appAtendimento.MapPost("/atualizar/{id}", (BaseAtendimento baseAtendimento, Atendimento.Construtor atendimentoAtualizado, uint id) =>
 			{
 				var atendimento = baseAtendimento.Atendimento.Find(id);
 				atendimento.cliente = atendimentoAtualizado.cliente;
@@ -96,11 +96,11 @@ namespace Union
 				return "Atendimento atualizado";
 			});
 						
-			//deletar usuario
-			appAtendimento.MapPost("/deletar/{id}", (BaseAtendimento baseAtendimento, int id) =>
+			//deletar Atendimento
+			appAtendimento.MapPost("/deletar/{id}", (BaseAtendimento baseAtendimento, uint id) =>
 			{
-				var usuario = baseAtendimento.Atendimento.Find(id);
-				baseAtendimento.Remove(usuario);
+				var atendimento = baseAtendimento.Atendimento.Find(id);
+				baseAtendimento.Remove(atendimento);
 				baseAtendimento.SaveChanges();
 				return "Atendimento deletado";
 			});
@@ -110,6 +110,7 @@ namespace Union
 			appFuncionario.Run();
 			appAtendimento.Run();
             */
-	}
+        }
+
     }
 }
