@@ -8,9 +8,9 @@ namespace Union
 {
     class Atendimento
     {
-        public int id {get; set;}
-        public Cliente? cliente {get; set;}
-        public Funcionario? funcionario {get; set;}
+        public int id;
+        public Cliente? cliente;
+        public Funcionario? funcionario;
         public enum tipoServico
         {
             Corte,
@@ -18,9 +18,17 @@ namespace Union
             /*
                 outros tipos de serviços ...
             */
-        }
+        };
+        public class Construtor { 
 
-        
+            public int id {get; set;}
+            public Cliente? cliente {get; set;}
+            public Funcionario? funcionario {get; set;}
+            public tipoServico tipoServico {get; set;} 
+            
+            }
+
+
 
     }
 }
