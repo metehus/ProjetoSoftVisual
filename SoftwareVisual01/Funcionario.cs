@@ -8,7 +8,7 @@ namespace Salao
 {
     class Funcionario
     {
-        public uint id {get; set;}
+        public ulong id {get; set;}
         public string? cpf {get; set;}
         public string? nome {get; set;}
         public string? numeroCelular {get; set;}
