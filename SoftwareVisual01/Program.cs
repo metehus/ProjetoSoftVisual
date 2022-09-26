@@ -29,11 +29,11 @@ namespace Salao
             var app = builder.Build();
 
             app.MapPost("/teste", (BaseDeDados banco, Cliente cliente) =>
-						{
-								banco.Cliente.Add(cliente);
-								banco.SaveChanges();
-								return banco.Cliente.ToList();
-						});
+                {
+                        banco.Cliente.Add(cliente);
+                        banco.SaveChanges();
+                        return banco.Cliente.ToList();
+                });
 
             app.Run();
         }
