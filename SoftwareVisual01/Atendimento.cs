@@ -12,6 +12,7 @@ namespace Salao
         public Cliente? cliente {get; set;}
         public Funcionario? funcionario {get; set;}
         public Tipo? tipo {get; set;}
+        public DataTime dataAtendimento {get; set;}
 
         public enum Tipo
         {

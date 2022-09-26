@@ -36,6 +36,50 @@ namespace Salao
                 return banco.Cliente.ToList();
             });
 
+            /*
+                Atendimento CRUD:
+            */
+
+            //mostrar tudo:
+            app.MapGet("/atendimento", (BaseDeDados banco) => 
+            {
+				return banco.Atendimento.ToList();
+			});
+
+            //mostra determinado atendimento:
+            app.MapGet("/atendimento/{id}", (BaseDeDados banco, int id) => 
+            {
+				return banco.Atendimento.Find(id);
+			});
+
+            //adicionar atendimento:
+            app.MapPost("/atendimento", (BaseDeDados banco, Atendimento atendimento) =>
+			{
+				banco.Atendimento.Add(atendimento);
+				banco.SaveChanges();
+				return "Atendimento adicionado!!!";
+			});
+
+            //atualização do atendimento:
+            app.MapPost("/atualizar/{id}", (BaseDeDados banco, Atendimento atendimentoAtualizado, int id) =>
+			{
+				var atendimento = banco.Atendimento.Find(id);
+                atendimento.tipo = atendimentoAtualizado.tipo;
+                atendimento.dataAtendimento = atendimentoAtualizado.dataAtendimento;
+				banco.SaveChanges();
+				return "Atendimento atualizado!!!";
+			});
+
+            //deletar atendimento:
+            app.MapPost("/deletar/{id}", (BaseDeDados banco, int id) =>
+			{
+				var atendimento = banco.Atendimento.Find(id);
+				banco.Remove(atendimento);
+				banco.SaveChanges();
+				return "Atendimeno atualizado!!!";
+			});
+		
+
             app.Run();
         }
     }
