@@ -28,12 +28,13 @@ namespace Salao
 
             var app = builder.Build();
 
+            /* Apenas um teste pra ver se o banco ta funcionando, pode remover */
             app.MapPost("/teste", (BaseDeDados banco, Cliente cliente) =>
-                {
-                        banco.Cliente.Add(cliente);
-                        banco.SaveChanges();
-                        return banco.Cliente.ToList();
-                });
+            {
+                banco.Cliente.Add(cliente);
+                banco.SaveChanges();
+                return banco.Cliente.ToList();
+            });
 
             app.Run();
         }
