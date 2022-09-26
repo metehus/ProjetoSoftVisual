@@ -1,30 +1,25 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore; <<adicionar com os comando do professor>>
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Salao
 {
     class Atendimento
     {
-        public uint id;
-        public Cliente? cliente;
-        public Funcionario? funcionario;
-        public enum tipoServico
+        public long Id {get; set;}
+        public Cliente? cliente {get; set;}
+        public Funcionario? funcionario {get; set;}
+        public Tipo? tipo {get; set;}
+
+        public enum Tipo
         {
             Corte,
             Colorir
             /*
                 outros tipos de serviços ...
             */
-        };
-        public class Construtor 
-        { 
-            public int id {get; set;}
-            public Cliente? cliente {get; set;}
-            public Funcionario? funcionario {get; set;}
-            public tipoServico tipoServico {get; set;} 
         }
     }
 }
