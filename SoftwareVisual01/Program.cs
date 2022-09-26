@@ -76,7 +76,7 @@ namespace Salao
 				var atendimento = banco.Atendimento.Find(id);
 				banco.Remove(atendimento);
 				banco.SaveChanges();
-				return "Atendimeno atualizado!!!";
+				return "Atendimeno deletado!!!";
 			});
 		
 
