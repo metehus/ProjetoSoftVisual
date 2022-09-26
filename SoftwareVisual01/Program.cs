@@ -47,7 +47,7 @@ namespace Salao
 			});
 
             //mostra determinado atendimento:
-            app.MapGet("/atendimento/{id}", (BaseDeDados banco, int id) => 
+            app.MapGet("/atendimento/{id}", (BaseDeDados banco, int ulong) => 
             {
 				return banco.Atendimento.Find(id);
 			});
@@ -61,7 +61,7 @@ namespace Salao
 			});
 
             //atualização do atendimento:
-            app.MapPost("/atualizar/{id}", (BaseDeDados banco, Atendimento atendimentoAtualizado, int id) =>
+            app.MapPost("/atualizar/{id}", (BaseDeDados banco, Atendimento atendimentoAtualizado, ulong id) =>
 			{
 				var atendimento = banco.Atendimento.Find(id);
                 atendimento.tipo = atendimentoAtualizado.tipo;
@@ -71,7 +71,7 @@ namespace Salao
 			});
 
             //deletar atendimento:
-            app.MapPost("/deletar/{id}", (BaseDeDados banco, int id) =>
+            app.MapPost("/deletar/{id}", (BaseDeDados banco, ulong id) =>
 			{
 				var atendimento = banco.Atendimento.Find(id);
 				banco.Remove(atendimento);
