@@ -47,7 +47,7 @@ namespace Salao
 			});
 
             //mostra determinado atendimento:
-            app.MapGet("/atendimento/{id}", (BaseDeDados banco, int ulong) => 
+            app.MapGet("/atendimento/{id}", (BaseDeDados banco, ulong id) => 
             {
 				return banco.Atendimento.Find(id);
 			});
