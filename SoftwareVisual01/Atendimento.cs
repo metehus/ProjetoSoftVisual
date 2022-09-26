@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 //using Microsoft.EntityFrameworkCore; <<adicionar com os comando do professor>>
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Union
+namespace Salao
 {
     class Atendimento
     {
