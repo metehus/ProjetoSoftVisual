@@ -11,16 +11,7 @@ namespace Salao
         public ulong Id {get; set;}
         public Cliente? cliente {get; set;}
         public Funcionario? funcionario {get; set;}
-        public Tipo? tipo {get; set;}
+        public String? tipo {get; set;}
         public DateTime dataAtendimento {get; set;}
-
-        public enum Tipo
-        {
-            Corte,
-            Colorir
-            /*
-                outros tipos de serviços ...
-            */
-        }
     }
 }
