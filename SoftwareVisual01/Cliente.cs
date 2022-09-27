@@ -7,7 +7,7 @@ namespace Salao
 {
     class Cliente
     {
-        public ulong id {get; set;}
+        public long id {get; set;}
         //public string? cpf {get; set;}
         public string? nome {get; set;}
         public string? telefone {get; set;}

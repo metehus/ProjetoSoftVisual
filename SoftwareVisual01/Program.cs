@@ -91,7 +91,7 @@ namespace Salao
 			});
 
             //mostra determinado cliente
-            app.MapGet("/cliente/{telefone}", (BaseDeDados banco, ulong id) => 
+            app.MapGet("/cliente/{id}", (BaseDeDados banco, long id) => 
             {
 				return banco.Cliente.Find(id);
 			});
@@ -105,9 +105,12 @@ namespace Salao
 			});
 
             //atualizar do cliente
-            app.MapPost("/atualizarcliente/{id}", (BaseDeDados banco, Cliente clienteAtualizado, ulong id  ) =>
+            app.MapPost("/atualizarcliente/{id}", (BaseDeDados banco, Cliente clienteAtualizado, long id  ) =>
 			{
 				var cliente = banco.Cliente.Find(id);
+                if (cliente == null) {
+                    return "cliente não existe";
+                }
                 cliente.nome = clienteAtualizado.nome;
                 cliente.telefone = clienteAtualizado.telefone;
                 cliente.email = clienteAtualizado.email;
@@ -116,9 +119,12 @@ namespace Salao
 			});
 
             //deletar cliente:
-            app.MapPost("/deletarcliente/{id}", (BaseDeDados banco,  ulong id) =>
+            app.MapPost("/deletarcliente/{id}", (BaseDeDados banco,  long id) =>
 			{
 				var cliente = banco.Cliente.Find(id);
+                if (cliente == null) {
+                    return "cliente não existe";
+                }
 				banco.Remove(cliente);
 				banco.SaveChanges();
 				return "Cliente deletado!!!";
