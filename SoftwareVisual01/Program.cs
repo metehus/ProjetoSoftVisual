@@ -29,12 +29,12 @@ namespace Salao
             var app = builder.Build();
 
             /* Apenas um teste pra ver se o banco ta funcionando, pode remover */
-            app.MapPost("/teste", (BaseDeDados banco, Cliente cliente) =>
-            {
-                banco.Cliente.Add(cliente);
-                banco.SaveChanges();
-                return banco.Cliente.ToList();
-            });
+            //app.MapPost("/teste", (BaseDeDados banco, Cliente cliente) =>
+            //{
+              //  banco.Cliente.Add(cliente);
+                //banco.SaveChanges();
+                //return banco.Cliente.ToList();
+            //});
 
             /*
                 Atendimento CRUD:
@@ -78,9 +78,57 @@ namespace Salao
 				banco.SaveChanges();
 				return "Atendimeno deletado!!!";
 			});
+
+
+            
+                //Cliente CRUD:
+            
+
+            //mostrar tudo:
+            app.MapGet("/clientes", (BaseDeDados banco) => 
+            {
+				return banco.Cliente.ToList();
+			});
+
+            //mostra determinado cliente
+            app.MapGet("/cliente/{telefone}", (BaseDeDados banco, ulong id) => 
+            {
+				return banco.Cliente.Find(id);
+			});
+
+            //adicionar cliente
+            app.MapPost("/cadastrarcliente", (BaseDeDados banco, Cliente cliente) =>
+			{
+				banco.Cliente.Add(cliente);
+				banco.SaveChanges();
+				return "Cliente adicionado!!!";
+			});
+
+            //atualizar do cliente
+            app.MapPost("/atualizarcliente/{id}", (BaseDeDados banco, Cliente clienteAtualizado, ulong id  ) =>
+			{
+				var cliente = banco.Cliente.Find(id);
+                cliente.nome = clienteAtualizado.nome;
+                cliente.telefone = clienteAtualizado.telefone;
+                cliente.email = clienteAtualizado.email;
+                banco.SaveChanges();
+				return "Cliente atualizado!!!";
+			});
+
+            //deletar cliente:
+            app.MapPost("/deletarcliente/{id}", (BaseDeDados banco,  ulong id) =>
+			{
+				var cliente = banco.Cliente.Find(id);
+				banco.Remove(cliente);
+				banco.SaveChanges();
+				return "Cliente deletado!!!";
+			});
 		
 
             app.Run();
+		
+
+            
         }
     }
 }
