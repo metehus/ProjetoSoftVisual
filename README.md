@@ -4,7 +4,7 @@
 
 Instale o .NET SDK e execute esses comandos **dentro da pasta SoftwareVisual01**:
 
-1. `dotnet install` para instalar todas as dependências
+1. `dotnet build` para instalar todas as dependências
 2. `dotnet run` para iniciar o serviço
 
 ## Se tiver algum problema com essa instalação acima, tente usar esses comandos:
