@@ -163,7 +163,7 @@ namespace Salao
 			{
 				var funcionario = banco.Funcionario.Find(id);
                 funcionario.nome = funcionarioAtualizado.nome;
-                funcionario.numeroCelular = funcionarioAtualizado.numeroCelular;
+                funcionario.telefone = funcionarioAtualizado.telefone;
                 funcionario.email = funcionarioAtualizado.email;
                 banco.SaveChanges();
 				return "Funcionario atualizado!!!";
