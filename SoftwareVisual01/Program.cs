@@ -36,7 +36,7 @@ namespace Salao
                 //return banco.Cliente.ToList();
             //});
 
-            /*
+                        /*
                 Atendimento CRUD:
             */
 
@@ -47,7 +47,7 @@ namespace Salao
 			});
 
             //mostra determinado atendimento:
-            app.MapGet("/atendimento/{id}", (BaseDeDados banco, ulong id) => 
+            app.MapGet("/atendimento/{id}", (BaseDeDados banco, long id) => 
             {
 				return banco.Atendimento.Find(id);
 			});
@@ -55,13 +55,19 @@ namespace Salao
             //adicionar atendimento:
             app.MapPost("/atendimento", (BaseDeDados banco, Atendimento atendimento) =>
 			{
-				banco.Atendimento.Add(atendimento);
-				banco.SaveChanges();
-				return "Atendimento adicionado!!!";
+
+                if (banco.Cliente.Find(atendimento.cliente) != null && banco.Funcionario.Find(atendimento.funcionario) != null) 
+                {
+                    banco.Atendimento.Add(atendimento);
+                    banco.SaveChanges();
+                    return "Atendimento adicionado!!!";
+                }
+				
+                return "cliente não existe";
 			});
 
             //atualização do atendimento:
-            app.MapPost("/atualizar/{id}", (BaseDeDados banco, Atendimento atendimentoAtualizado, ulong id) =>
+            app.MapPost("/atualizar/{id}", (BaseDeDados banco, Atendimento atendimentoAtualizado, long id) =>
 			{
 				var atendimento = banco.Atendimento.Find(id);
                 atendimento.tipo = atendimentoAtualizado.tipo;
@@ -71,14 +77,13 @@ namespace Salao
 			});
 
             //deletar atendimento:
-            app.MapPost("/deletar/{id}", (BaseDeDados banco, ulong id) =>
+            app.MapPost("/deletar/{id}", (BaseDeDados banco, long id) =>
 			{
 				var atendimento = banco.Atendimento.Find(id);
 				banco.Remove(atendimento);
 				banco.SaveChanges();
 				return "Atendimeno deletado!!!";
 			});
-
 
             
                 //Cliente CRUD:
