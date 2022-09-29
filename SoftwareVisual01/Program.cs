@@ -60,6 +60,7 @@ namespace Salao
                 {
                     banco.Atendimento.Add(atendimento);
                     banco.SaveChanges();
+			
                     return "Atendimento adicionado!!!";
                 }
 				
@@ -70,9 +71,11 @@ namespace Salao
             app.MapPost("/atualizar/{id}", (BaseDeDados banco, Atendimento atendimentoAtualizado, long id) =>
 			{
 				var atendimento = banco.Atendimento.Find(id);
-                atendimento.tipo = atendimentoAtualizado.tipo;
-                atendimento.dataAtendimento = atendimentoAtualizado.dataAtendimento;
+				
+				atendimento.tipo = atendimentoAtualizado.tipo;
+				atendimento.dataAtendimento = atendimentoAtualizado.dataAtendimento;
 				banco.SaveChanges();
+				
 				return "Atendimento atualizado!!!";
 			});
 
@@ -80,8 +83,10 @@ namespace Salao
             app.MapPost("/deletar/{id}", (BaseDeDados banco, long id) =>
 			{
 				var atendimento = banco.Atendimento.Find(id);
+				
 				banco.Remove(atendimento);
 				banco.SaveChanges();
+				
 				return "Atendimeno deletado!!!";
 			});
 
@@ -106,6 +111,7 @@ namespace Salao
 			{
 				banco.Cliente.Add(cliente);
 				banco.SaveChanges();
+				
 				return "Cliente adicionado!!!";
 			});
 
@@ -113,13 +119,17 @@ namespace Salao
             app.MapPost("/atualizarcliente/{id}", (BaseDeDados banco, Cliente clienteAtualizado, long id  ) =>
 			{
 				var cliente = banco.Cliente.Find(id);
-                if (cliente == null) {
-                    return "cliente não existe";
-                }
-                cliente.nome = clienteAtualizado.nome;
-                cliente.telefone = clienteAtualizado.telefone;
-                cliente.email = clienteAtualizado.email;
-                banco.SaveChanges();
+				
+				if (cliente == null) 
+				{
+				    return "cliente não existe";
+				}
+				
+				cliente.nome = clienteAtualizado.nome;
+				cliente.telefone = clienteAtualizado.telefone;
+				cliente.email = clienteAtualizado.email;
+				banco.SaveChanges();
+				
 				return "Cliente atualizado!!!";
 			});
 
@@ -127,11 +137,15 @@ namespace Salao
             app.MapPost("/deletarcliente/{id}", (BaseDeDados banco,  long id) =>
 			{
 				var cliente = banco.Cliente.Find(id);
-                if (cliente == null) {
-                    return "cliente não existe";
-                }
+				
+				if (cliente == null) 
+				{
+				    return "cliente não existe";
+				}
+				
 				banco.Remove(cliente);
 				banco.SaveChanges();
+				
 				return "Cliente deletado!!!";
 			});
 		
@@ -162,10 +176,12 @@ namespace Salao
             app.MapPost("/atualizarfuncionario/{id}", (BaseDeDados banco, Funcionario funcionarioAtualizado, long id  ) =>
 			{
 				var funcionario = banco.Funcionario.Find(id);
-                funcionario.nome = funcionarioAtualizado.nome;
-                funcionario.telefone = funcionarioAtualizado.telefone;
-                funcionario.email = funcionarioAtualizado.email;
-                banco.SaveChanges();
+				
+				funcionario.nome = funcionarioAtualizado.nome;
+				funcionario.telefone = funcionarioAtualizado.telefone;
+				funcionario.email = funcionarioAtualizado.email;
+				banco.SaveChanges();
+				
 				return "Funcionario atualizado!!!";
 			});
 
@@ -173,16 +189,14 @@ namespace Salao
             app.MapPost("/deletarfuncionario/{id}", (BaseDeDados banco,  long id) =>
 			{
 				var funcionario = banco.Funcionario.Find(id);
+				
 				banco.Remove(funcionario);
 				banco.SaveChanges();
+				
 				return "Funcionario demitido!!!";
 			});
-		
 
             app.Run();
-		
-
-            
         }
     }
 }
