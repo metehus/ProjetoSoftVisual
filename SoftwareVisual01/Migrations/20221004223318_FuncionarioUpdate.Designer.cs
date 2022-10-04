@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Salao;
 
@@ -10,32 +11,37 @@ using Salao;
 namespace SoftwareVisual01.Migrations
 {
     [DbContext(typeof(BaseDeDados))]
-    partial class BaseDeDadosModelSnapshot : ModelSnapshot
+    [Migration("20221004223318_FuncionarioUpdate")]
+    partial class FuncionarioUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
             modelBuilder.Entity("Salao.Atendimento", b =>
                 {
-                    b.Property<long>("id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("clienteid")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("dataAtendimento")
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("idCliente")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("idFuncionario")
+                    b.Property<ulong?>("funcionarioid")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("tipo")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("clienteid");
+
+                    b.HasIndex("funcionarioid");
 
                     b.ToTable("Atendimento");
                 });
@@ -62,12 +68,9 @@ namespace SoftwareVisual01.Migrations
 
             modelBuilder.Entity("Salao.Funcionario", b =>
                 {
-                    b.Property<long>("id")
+                    b.Property<ulong>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("cargo")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("email")
                         .HasColumnType("TEXT");
@@ -81,6 +84,21 @@ namespace SoftwareVisual01.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Funcionario");
+                });
+
+            modelBuilder.Entity("Salao.Atendimento", b =>
+                {
+                    b.HasOne("Salao.Cliente", "cliente")
+                        .WithMany()
+                        .HasForeignKey("clienteid");
+
+                    b.HasOne("Salao.Funcionario", "funcionario")
+                        .WithMany()
+                        .HasForeignKey("funcionarioid");
+
+                    b.Navigation("cliente");
+
+                    b.Navigation("funcionario");
                 });
 #pragma warning restore 612, 618
         }
