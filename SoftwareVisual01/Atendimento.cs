@@ -8,7 +8,7 @@ namespace Salao
 {
     class Atendimento
     {
-        public ulong Id {get; set;}
+        public long Id {get; set;}
         public Cliente? cliente {get; set;}
         public Funcionario? funcionario {get; set;}
         public String? tipo {get; set;}
