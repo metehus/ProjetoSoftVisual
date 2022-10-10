@@ -60,6 +60,16 @@ namespace Salao
                         && banco.Funcionario.Find(atendimento.idFuncionario) != null
                     )
                     {
+                        var atendimentos = banco.Atendimento.ToList();
+
+                        foreach(var _atendimento in atendimentos) {
+                            if (_atendimento.idCliente == atendimento.idCliente && _atendimento.dataAtendimento == atendimento.dataAtendimento) {
+                                return "Já existe um atendimento neste horário com este cliente.";
+                            } else if (_atendimento.idFuncionario == atendimento.idFuncionario && _atendimento.dataAtendimento == atendimento.dataAtendimento) {
+                                return "Já existe um atendimento neste horário com este funcionario.";
+                            }
+                        }
+
                         banco.Atendimento.Add(atendimento);
                         banco.SaveChanges();
 
@@ -72,10 +82,15 @@ namespace Salao
 
             //atualização do atendimento:
             app.MapPost(
-                "/atualizar/{id}",
+                "/atendimento/atualizar/{id}",
                 (BaseDeDados banco, Atendimento atendimentoAtualizado, long id) =>
                 {
                     var atendimento = banco.Atendimento.Find(id);
+
+                    if (atendimento == null)
+                    {
+                        return "atendimento não existe";
+                    }
 
                     atendimento.tipo = atendimentoAtualizado.tipo;
                     atendimento.dataAtendimento = atendimentoAtualizado.dataAtendimento;
@@ -87,10 +102,15 @@ namespace Salao
 
             //deletar atendimento:
             app.MapPost(
-                "/deletar/{id}",
+                "/atendimento/deletar/{id}",
                 (BaseDeDados banco, long id) =>
                 {
                     var atendimento = banco.Atendimento.Find(id);
+
+                    if (atendimento == null)
+                    {
+                        return "atendimento não existe";
+                    }
 
                     banco.Remove(atendimento);
                     banco.SaveChanges();
@@ -104,7 +124,7 @@ namespace Salao
 
             //mostrar tudo:
             app.MapGet(
-                "/clientes",
+                "/cliente",
                 (BaseDeDados banco) =>
                 {
                     return banco.Cliente.ToList();
@@ -122,7 +142,7 @@ namespace Salao
 
             //adicionar cliente
             app.MapPost(
-                "/cadastrarcliente",
+                "/cliente",
                 (BaseDeDados banco, Cliente cliente) =>
                 {
                     banco.Cliente.Add(cliente);
@@ -134,7 +154,7 @@ namespace Salao
 
             //atualizar do cliente
             app.MapPost(
-                "/atualizarcliente/{id}",
+                "/cliente/atualizar/{id}",
                 (BaseDeDados banco, Cliente clienteAtualizado, long id) =>
                 {
                     var cliente = banco.Cliente.Find(id);
@@ -155,7 +175,7 @@ namespace Salao
 
             //deletar cliente:
             app.MapPost(
-                "/deletarcliente/{id}",
+                "/cliente/deletar/{id}",
                 (BaseDeDados banco, long id) =>
                 {
                     var cliente = banco.Cliente.Find(id);
@@ -194,7 +214,7 @@ namespace Salao
 
             //adicionar funcionario
             app.MapPost(
-                "/cadastrarfuncionario",
+                "/funcionario",
                 (BaseDeDados banco, Funcionario funcionario) =>
                 {
                     banco.Funcionario.Add(funcionario);
@@ -205,10 +225,15 @@ namespace Salao
 
             //atualizar do funcionario
             app.MapPost(
-                "/atualizarfuncionario/{id}",
+                "/funcionario/atualizar/{id}",
                 (BaseDeDados banco, Funcionario funcionarioAtualizado, long id) =>
                 {
                     var funcionario = banco.Funcionario.Find(id);
+
+                    if (funcionario == null)
+                    {
+                        return "funcionário não existe";
+                    }
 
                     funcionario.nome = funcionarioAtualizado.nome;
                     funcionario.telefone = funcionarioAtualizado.telefone;
@@ -222,10 +247,15 @@ namespace Salao
 
             //demitir funcionario:
             app.MapPost(
-                "/deletarfuncionario/{id}",
+                "/funcionario/deletar/{id}",
                 (BaseDeDados banco, long id) =>
                 {
                     var funcionario = banco.Funcionario.Find(id);
+
+                    if (funcionario == null)
+                    {
+                        return "funcionário não existe";
+                    }
 
                     banco.Remove(funcionario);
                     banco.SaveChanges();
