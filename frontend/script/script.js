@@ -239,8 +239,51 @@ const listarAtentimentos = () => {
 		})
 }
 
-function atualizarAtendimento (id, tipo, data) {
-	console.log(id, tipo, data)
+function atualizarAtendimento = (id, tipo, data) =>
+{
+	let body =
+	    {
+		    'tipo' = tipo,
+		    'data' = data
+	    }
+	
+	fetch(url + "atendimento/atualizar/" + id,
+	{
+		'method': 'POST',
+		'redirect': 'follow',
+		'headers':
+		{
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		'body': JSON.stringify(body)
+	})
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	.then((output) =>
+	{
+		console.log(output)
+		alert('Usuário atualizado!')
+	})
+	.catch((error) =>
+	{
+		console.log(error)
+		alert('Não foi possível atualizar o usuário!')
+	})
+}
+	
 }
 
 const excluirAtendimento = (idSelecionado) => {
@@ -473,7 +516,49 @@ const listarFuncionarios = () => {
 }
 
 function atualizarFuncionario(id, nome, telefone, email, cargo) {
-	console.log(id, nome, telefone, email, cargo)
+	let body =
+	    {
+		    'nome' = nome,
+		    'telefone' = telefone,
+		    'email' = email,
+		    'cargo' = cargo
+	    }
+	
+	fetch(url + "funcionario/atualizar/" + id,
+	{
+		'method': 'POST',
+		'redirect': 'follow',
+		'headers':
+		{
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		'body': JSON.stringify(body)
+	})
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	.then((output) =>
+	{
+		console.log(output)
+		alert('Funcionario atualizado!')
+	})
+	.catch((error) =>
+	{
+		console.log(error)
+		alert('Não foi possível atualizar o funcionario!')
+	})
 }
 
 const excluirFuncionario = (idSelecionado) => {
@@ -692,7 +777,48 @@ const listarClientes = () => {
 }
 
 function atualizarCliente (id, nome, telefone, email) {
-	console.log(id, nome, email, telefone)
+	let body =
+	    {
+		    'nome' = nome,
+		    'telefone' = telefone,
+		    'email' = email
+	    }
+	
+	fetch(url + "cliente/atualizar/" + id,
+	{
+		'method': 'POST',
+		'redirect': 'follow',
+		'headers':
+		{
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		'body': JSON.stringify(body)
+	})
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	.then((output) =>
+	{
+		console.log(output)
+		alert('Cliente atualizado!')
+	})
+	.catch((error) =>
+	{
+		console.log(error)
+		alert('Não foi possível atualizar o cliente!')
+	})
 }
 
 const excluirCliente = (idSelecionado) => {
