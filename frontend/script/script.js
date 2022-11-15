@@ -27,12 +27,12 @@ const mostrarAtendimento = () =>
 	.then((atendimento) =>
 	{
 		//pega div que vai conter a lista de atendimentos
-		let listarAtendimento = document.getElementById('listar-atendimentos')
+		let mostrarAtendimento = document.getElementById('mostrar-atendimentos')
 		
 		//limpa div
-		while(listarAtendimento.firstChild)
+		while(mostrarAtendimento.firstChild)
 		{
-			listarAtendimento.removeChild(listarAtendimento.firstChild)
+			mostrarAtendimento.removeChild(mostrarAtendimento.firstChild)
 		}
 
 		let idSelecionado = document.getElementById('id_atendimento')
@@ -71,7 +71,7 @@ const mostrarAtendimento = () =>
 			divAtendimento.appendChild(divDataAtendimento)
 			
 			//insere a div do usuario na div com a lista de usuarios
-			listarAtendimento.appendChild(divAtendimento)
+			mostrarAtendimento.appendChild(divAtendimento)
 			}
 		}
 	})
