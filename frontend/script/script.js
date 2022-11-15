@@ -5,7 +5,7 @@
 
 //atendimento
 
-const cadastrar_atendimento = () =>
+const cadastrarAtendimento = () =>
 {
 	let idCliente = document.getElementById('id-cliente')
 	let idFuncionario = document.getElementById('id-funcionario')
@@ -19,12 +19,65 @@ const cadastrar_atendimento = () =>
 	console.log(idCliente.value, idFuncionario.value, tipo.value, data.value)
 }
 
-const mostrar_atendimento = () =>
+const mostrarAtendimento = () =>
 {
-	//codigo
+	//da um GET no endpoint "atendimentos"
+	fetch(url + 'atendimento')
+	.then(response => response.json())
+	.then((atendimento) =>
+	{
+		//pega div que vai conter a lista de atendimentos
+		let listarAtendimento = document.getElementById('listar-atendimentos')
+		
+		//limpa div
+		while(listarAtendimento.firstChild)
+		{
+			listarAtendimento.removeChild(listarAtendimento.firstChild)
+		}
+
+		let idSelecionado = document.getElementById('id_atendimento')
+		
+		//preenche div com usuarios recebidos do GET
+		for(let atendimento of Atendimento)
+		{
+			if(atendimento.id == idSelecionado)
+			{
+			//cria div para as informacoes de um atendimento
+			let divAtendimento = document.createElement('div')
+			divAtendimento.setAttribute('class', 'form')
+
+			//pega o id do cliente
+			let divIdCliente = document.createElement('input')
+			divIdCliente.placeholder = 'Id do cliente'
+			divIdCliente.value = atendimento.idCliente
+			divAtendimento.appendChild(divIdCliente)
+			
+			//pega o id do funcionario
+			let divIdFuncionario = document.createElement('input')
+			divIdFuncionario.placeholder = 'Id do funcionario'
+			divIdFuncionario.value = atendimento.idFuncionario
+			divAtendimento.appendChild(divIdFuncionario)
+			
+			//pega o tipo do atendimento
+			let divTipoAtendimento = document.createElement('input')
+			divTipoAtendimento.placeholder = 'Tipo de atendimento'
+			divTipoAtendimento.value = atendimento.tipo
+			divAtendimento.appendChild(divTipoAtendimento)
+			
+			//pega a data do atendimento
+			let divDataAtendimento = document.createElement('input')
+			divDataAtendimento.placeholder = 'Data do atendimento'
+			divDataAtendimento.value = atendimento.dataAtendimeto
+			divAtendimento.appendChild(divDataAtendimento)
+			
+			//insere a div do usuario na div com a lista de usuarios
+			listarAtendimento.appendChild(divAtendimento)
+			}
+		}
+	})
 }
 
-const listar_atentimentos = () =>
+const listarAtentimentos = () =>
 {
 	//da um GET no endpoint "atendimentos"
 	fetch(url + 'atendimento')
@@ -77,14 +130,14 @@ const listar_atentimentos = () =>
 	})
 }
 
-const excluir_atendimento = () =>
+const excluirAtendimento = () =>
 {
 	//codigo
 }
 
 //funcionario
 
-const cadastrar_funcionario = () =>
+const cadastrarFuncionario = () =>
 {
 	let nome = document.getElementById('nome-funcionario')
 	let telefone = document.getElementById('telefone-funcionario')
@@ -98,12 +151,12 @@ const cadastrar_funcionario = () =>
 	console.log(nome.value, telefone.value, email.value, cargo.value)
 }
 
-const mostrar_funcionario = () =>
+const mostrarFuncionario = () =>
 {
 	//codigo
 }
 
-const listar_funcionarios = () =>
+const listarFuncionarios = () =>
 {
 	//da um GET no endpoint "funcionarios"
 	fetch(url + 'funcionario')
@@ -156,14 +209,14 @@ const listar_funcionarios = () =>
 	})
 }
 
-const excluir_funcionario = () =>
+const excluirFuncionario = () =>
 {
 	//codigo
 }
 
 //cliente
 
-const cadastrar_cliente = (e) =>
+const cadastrarCliente = (e) =>
 {
 	let nome = document.getElementById('nome-cliente')
 	let telefone = document.getElementById('telefone-cliente')
@@ -176,12 +229,12 @@ const cadastrar_cliente = (e) =>
 	console.log(nome.value, telefone.value, email.value)
 }
 
-const mostrar_cliente = () =>
+const mostrarCliente = () =>
 {
 	//codigo
 }
 
-const listar_clientes = () =>
+const listarClientes = () =>
 {
 	//da um GET no endpoint "clientes"
 	fetch(url + 'cliente')
@@ -228,7 +281,7 @@ const listar_clientes = () =>
 	})
 }
 
-const excluir_cliente = () =>
+const excluirCliente = () =>
 {
 	//codigo
 }
