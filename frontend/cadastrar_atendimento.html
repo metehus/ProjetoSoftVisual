@@ -11,7 +11,7 @@
 	<script src="./script/script.js"></script>
 </head>
 
-<body>
+<body onload="carregaSelecoes()">
 	<div class="entire_menu">
 		<input type="checkbox" id="change-hamburguer" />
 		<a class="hamburguer" href="#">
@@ -27,11 +27,15 @@
 	</div>
 
 	<div class="form">
-		<input id="id-cliente" placeholder="Id do cliente" type="number" onblur="valida_id(this)" />
-		<input id="id-funcionario" placeholder="Id do funcionario" type="number" onblur="valida_id(this)" />
+		Funcionário:
+		<select id="id-funcionario">
+		</select>
+		cliente:
+		<select id="id-cliente">
+		</select>
 		<input id="tipo-atendimento" placeholder="Tipo de atendimento" type="text" onblur="valida_cargo_ou_tipo(this)" />
 		<input id="data-atendimento" placeholder="Data do atendimento" type="datetime-local" onchange="valida_data(this)" />
-		<button onclick="cadastrar_atendimento()">Cadastrar</button>
+		<button onclick="cadastrarAtendimento()">Cadastrar</button>
 	</div>
 </body>
 

@@ -26,7 +26,12 @@ namespace Salao
                 ?? "Data Source=BancoDeDados.db";
             builder.Services.AddSqlite<BaseDeDados>(connectionString);
 
+            builder.Services.AddCors(options => options.AddDefaultPolicy(policy => policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+
             var app = builder.Build();
+
+            app.UseCors();
 
             /*
             Atendimento CRUD:
@@ -37,7 +42,25 @@ namespace Salao
                 "/atendimento",
                 (BaseDeDados banco) =>
                 {
-                    return banco.Atendimento.ToList();
+                    var atendimentos = banco.Atendimento.ToList();
+
+                    var atendimentoRetornos = new List<AtendimentoRetorno>();
+
+                    foreach (var atendimento in atendimentos) {
+                        var item = new AtendimentoRetorno();
+                        item.id = atendimento.id;
+                        item.idCliente = atendimento.idCliente;
+                        item.idFuncionario = atendimento.idFuncionario;
+                        item.tipo = atendimento.tipo;
+                        item.dataAtendimento = atendimento.dataAtendimento;
+
+                        item.nomeCliente = banco.Cliente.Find(atendimento.idCliente)?.nome;
+                        item.nomeFuncionario = banco.Funcionario.Find(atendimento.idFuncionario)?.nome;
+
+                        atendimentoRetornos.Add(item);
+                    }
+
+                    return atendimentoRetornos;
                 }
             );
 

@@ -7,9 +7,9 @@
 		<title>T2 Programação Visual</title>
 		<link rel="stylesheet" href="./style/style.css">
 		<link rel="stylesheet" href="./style/stylelog.scss">
-		<script src="script.js"></script>
+		<script src="./script/script.js"></script>
 	</head>
-	<body>
+	<body onload="listarFuncionarios()">
 		<div class="entire_menu">
 			<input type="checkbox" id="change-hamburguer" />
 		<a class="hamburguer" href="#">
@@ -27,6 +27,7 @@
 		<div class="form">
 			<h2>Listagem de funcionários</h2>
 			<a href="./cadastrar_funcionario.html">Cadastrar funcionário</a>
+			<div id="listar-funcionarios"></div>
 		</div>
 	</body>
 </html>

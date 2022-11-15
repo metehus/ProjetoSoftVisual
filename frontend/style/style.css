@@ -16,7 +16,7 @@ a {
 	text-align: center;
 	z-index: 1;
 }
-.form button,input
+.form button,input,select
 {
 	border: 0;
 	font-size: 14px;
@@ -36,14 +36,14 @@ a {
 	background: #cc0066;
 }
 
-.form input
+.form input,select
 {
 	background: #e2e2e2e2;
 	box-sizing: border-box;
 	margin-bottom: 15px;
 }
 
-.form input.erro-input
+.form input.erro-input, select.erro-input
 {
 	border: solid 1px red;
 	background-color: #ffd0d0e2;

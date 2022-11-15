@@ -7,9 +7,41 @@ var url = 'http://localhost:3000/'
 
 //atendimento
 
-const cadastrarAtendimento = () =>
-{
-	/*
+const carregaSelecoes = () => {
+	fetch(url + 'funcionario')
+		.then(response => response.json())
+		.then((funcionarios) => {
+
+			const selectFunctionario = document.getElementById('id-funcionario')
+			selectFunctionario.innerHTML = ''
+
+			for (const funcionario of funcionarios) {
+				const option = document.createElement('option')
+				option.innerText = funcionario.nome
+				option.value = funcionario.id
+				selectFunctionario.appendChild(option)
+			}
+
+			fetch(url + 'cliente')
+				.then(response => response.json())
+				.then((clientes) => {
+
+					const selectCliente = document.getElementById('id-cliente')
+					selectCliente.innerHTML = ''
+
+					for (const cliente of clientes) {
+						const option = document.createElement('option')
+						option.value = cliente.id
+						option.innerText = cliente.nome
+						selectCliente.appendChild(option)
+					}
+
+				})
+		})
+}
+
+const cadastrarAtendimento = () => {
+
 	let idCliente = document.getElementById('id-cliente')
 	let idFuncionario = document.getElementById('id-funcionario')
 	let tipo = document.getElementById('tipo-atendimento')
@@ -19,211 +51,229 @@ const cadastrarAtendimento = () =>
 		return
 	}
 
-	console.log(idCliente.value, idFuncionario.value, tipo.value, data.value)
-	*/
-	
+
 	let bodyAtendimento =
 	{
-		'idCliente':         document.getElementById('id-cliente').value,
-		'idFuncionario':         document.getElementById('id-funcionario').value,
-		'tipoAtendimento': document.getElementById('tipo-atendimento').value,
-		'dataAtendimento':       document.getElementById('data-atendimento').value
+		idCliente: document.getElementById('id-cliente').value,
+		idFuncionario: document.getElementById('id-funcionario').value,
+		tipo: document.getElementById('tipo-atendimento').value,
+		dataAtendimento: document.getElementById('data-atendimento').value
 	};
-	
+
 	fetch(url + "atendimento",
-	{
-		'method': 'POST',
-		'redirect': 'follow',
-		'headers':
 		{
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		},
-		'body': JSON.stringify(bodyAtendimento)
-	})
-	//checa se requisicao deu certo
-	.then((response) =>
-	{
-		if(response.ok)
-		{
-			return response.text()
-		}
-		else
-		{
-			return response.text().then((text) =>
+			'method': 'POST',
+			'redirect': 'follow',
+			'headers':
 			{
-				throw new Error(text)
-			})
-		}
-	})
-	//trata resposta
-	.then((output) =>
-	{
-		console.log(output)
-		alert('evento efetuado!')
-	})
-	//trata erro
-	.catch((error) =>
-	{
-		console.log(error)
-		alert('Não foi possível efetuar o evento!')
-	})
-	
-}
-
-const mostrarAtendimento = () =>
-{
-	//da um GET no endpoint "atendimentos"
-	fetch(url + 'atendimento')
-	.then(response => response.json())
-	.then((atendimento) =>
-	{
-		//pega div que vai conter a lista de atendimentos
-		let mostrarAtendimento = document.getElementById('mostrar-atendimentos')
-		
-		//limpa div
-		while(mostrarAtendimento.firstChild)
-		{
-			mostrarAtendimento.removeChild(mostrarAtendimento.firstChild)
-		}
-
-		let idSelecionado = document.getElementById('id_atendimento')
-		
-		//preenche div com usuarios recebidos do GET
-		for(let atendimento of Atendimento)
-		{
-			if(atendimento.id == idSelecionado)
-			{
-			//cria div para as informacoes de um atendimento
-			let divAtendimento = document.createElement('div')
-			divAtendimento.setAttribute('class', 'form')
-
-			//pega o id do cliente
-			let divIdCliente = document.createElement('input')
-			divIdCliente.placeholder = 'Id do cliente'
-			divIdCliente.value = atendimento.idCliente
-			divAtendimento.appendChild(divIdCliente)
-			
-			//pega o id do funcionario
-			let divIdFuncionario = document.createElement('input')
-			divIdFuncionario.placeholder = 'Id do funcionario'
-			divIdFuncionario.value = atendimento.idFuncionario
-			divAtendimento.appendChild(divIdFuncionario)
-			
-			//pega o tipo do atendimento
-			let divTipoAtendimento = document.createElement('input')
-			divTipoAtendimento.placeholder = 'Tipo de atendimento'
-			divTipoAtendimento.value = atendimento.tipo
-			divAtendimento.appendChild(divTipoAtendimento)
-			
-			//pega a data do atendimento
-			let divDataAtendimento = document.createElement('input')
-			divDataAtendimento.placeholder = 'Data do atendimento'
-			divDataAtendimento.value = atendimento.dataAtendimeto
-			divAtendimento.appendChild(divDataAtendimento)
-			
-			//insere a div do usuario na div com a lista de usuarios
-			mostrarAtendimento.appendChild(divAtendimento)
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			},
+			'body': JSON.stringify(bodyAtendimento)
+		})
+		//checa se requisicao deu certo
+		.then((response) => {
+			if (response.ok) {
+				return response.text()
 			}
-		}
-	})
+			else {
+				return response.text().then((text) => {
+					throw new Error(text)
+				})
+			}
+		})
+		//trata resposta
+		.then((output) => {
+			console.log(output)
+			alert('evento efetuado!')
+		})
+		//trata erro
+		.catch((error) => {
+			console.log(error)
+			alert('Não foi possível efetuar o evento!')
+		})
+
 }
 
-const listarAtentimentos = () =>
-{
+const mostrarAtendimento = () => {
 	//da um GET no endpoint "atendimentos"
 	fetch(url + 'atendimento')
-	.then(response => response.json())
-	.then((atendimento) =>
-	{
-		//pega div que vai conter a lista de atendimentos
-		let listarAtendimento = document.getElementById('listar-atendimentos')
-		
-		//limpa div
-		while(listarAtendimento.firstChild)
-		{
-			listarAtendimento.removeChild(listarAtendimento.firstChild)
-		}
-		
-		//preenche div com usuarios recebidos do GET
-		for(let atendimento of Atendimento)
-		{
-			//cria div para as informacoes de um atendimento
-			let divAtendimento = document.createElement('div')
-			divAtendimento.setAttribute('class', 'form')
+		.then(response => response.json())
+		.then((atendimento) => {
+			//pega div que vai conter a lista de atendimentos
+			let mostrarAtendimento = document.getElementById('mostrar-atendimentos')
 
-			//pega o id do cliente
-			let divIdCliente = document.createElement('input')
-			divIdCliente.placeholder = 'Id do cliente'
-			divIdCliente.value = atendimento.idCliente
-			divAtendimento.appendChild(divIdCliente)
-			
-			//pega o id do funcionario
-			let divIdFuncionario = document.createElement('input')
-			divIdFuncionario.placeholder = 'Id do funcionario'
-			divIdFuncionario.value = atendimento.idFuncionario
-			divAtendimento.appendChild(divIdFuncionario)
-			
-			//pega o tipo do atendimento
-			let divTipoAtendimento = document.createElement('input')
-			divTipoAtendimento.placeholder = 'Tipo de atendimento'
-			divTipoAtendimento.value = atendimento.tipo
-			divAtendimento.appendChild(divTipoAtendimento)
-			
-			//pega a data do atendimento
-			let divDataAtendimento = document.createElement('input')
-			divDataAtendimento.placeholder = 'Data do atendimento'
-			divDataAtendimento.value = atendimento.dataAtendimeto
-			divAtendimento.appendChild(divDataAtendimento)
-			
-			//insere a div do usuario na div com a lista de usuarios
-			listarAtendimento.appendChild(divAtendimento)
-		}
-	})
+			//limpa div
+			while (mostrarAtendimento.firstChild) {
+				mostrarAtendimento.removeChild(mostrarAtendimento.firstChild)
+			}
+
+			let idSelecionado = document.getElementById('id_atendimento')
+
+			//preenche div com usuarios recebidos do GET
+			for (let atendimento of Atendimento) {
+				if (atendimento.id == idSelecionado) {
+					//cria div para as informacoes de um atendimento
+					let divAtendimento = document.createElement('div')
+					divAtendimento.setAttribute('class', 'form')
+
+					//pega o id do cliente
+					let divIdCliente = document.createElement('input')
+					divIdCliente.placeholder = 'Id do cliente'
+					divIdCliente.value = atendimento.idCliente
+					divAtendimento.appendChild(divIdCliente)
+
+					//pega o id do funcionario
+					let divIdFuncionario = document.createElement('input')
+					divIdFuncionario.placeholder = 'Id do funcionario'
+					divIdFuncionario.value = atendimento.idFuncionario
+					divAtendimento.appendChild(divIdFuncionario)
+
+					//pega o tipo do atendimento
+					let divTipoAtendimento = document.createElement('input')
+					divTipoAtendimento.placeholder = 'Tipo de atendimento'
+					divTipoAtendimento.value = atendimento.tipo
+					divAtendimento.appendChild(divTipoAtendimento)
+
+					//pega a data do atendimento
+					let divDataAtendimento = document.createElement('input')
+					divDataAtendimento.placeholder = 'Data do atendimento'
+					divDataAtendimento.value = atendimento.dataAtendimeto
+					divAtendimento.appendChild(divDataAtendimento)
+
+					//insere a div do usuario na div com a lista de usuarios
+					mostrarAtendimento.appendChild(divAtendimento)
+				}
+			}
+		})
 }
 
-const excluirAtendimento = () =>
-{
-	let idSelecionado = document.getElementById('id_atendimento')
+const listarAtentimentos = () => {
+	//da um GET no endpoint "atendimentos"
+	fetch(url + 'atendimento')
+		.then(response => response.json())
+		.then((atendimentos) => {
+			//pega div que vai conter a lista de atendimentos
+			let listarAtendimento = document.getElementById('listar-atendimentos')
 
-	fetch(url + 'atendimento/' + idSelecionado,
-	{
-		'method': 'DELETE',
-		'redirect': 'follow'
-	})
-	.then((response) =>
-	{
-		if(response.ok)
+			//limpa div
+			while (listarAtendimento.firstChild) {
+				listarAtendimento.removeChild(listarAtendimento.firstChild)
+			}
+
+			//preenche div com usuarios recebidos do GET
+			for (let atendimento of atendimentos) {
+				//cria div para as informacoes de um atendimento
+				let divAtendimento = document.createElement('div')
+				divAtendimento.setAttribute('class', 'form')
+
+				const botaoDeletar = document.createElement('button')
+				botaoDeletar.innerText = 'Apagar'
+				botaoDeletar.onclick = () => {
+					listarAtendimento.removeChild(divAtendimento)
+					excluirAtendimento(atendimento.id)
+				}
+				divAtendimento.appendChild(botaoDeletar)
+
+				const botaoAtualizar = document.createElement('button')
+				botaoAtualizar.innerText = 'Atualizar'
+				divAtendimento.appendChild(botaoAtualizar)
+
+
+				//pega o id do cliente
+				let divIdCliente = document.createElement('input')
+				divIdCliente.placeholder = 'Cliente'
+				divIdCliente.value = atendimento.nomeCliente || 'Cliente não existente'
+				divIdCliente.disabled = true
+				divAtendimento.appendChild(divIdCliente)
+
+				//pega o id do funcionario
+				let divIdFuncionario = document.createElement('input')
+				divIdFuncionario.placeholder = 'Funcionario'
+				divIdFuncionario.value = atendimento.nomeFuncionario || 'Cliente não existente'
+				divIdFuncionario.disabled = true
+				divAtendimento.appendChild(divIdFuncionario)
+
+				//pega o tipo do atendimento
+				let divTipoAtendimento = document.createElement('input')
+				divTipoAtendimento.placeholder = 'Tipo de atendimento'
+				divTipoAtendimento.value = atendimento.tipo
+				divTipoAtendimento.disabled = true
+				divAtendimento.appendChild(divTipoAtendimento)
+
+				//pega a data do atendimento
+				let divDataAtendimento = document.createElement('input')
+				divDataAtendimento.placeholder = 'Data do atendimento'
+				divDataAtendimento.type = 'datetime-local'
+				divDataAtendimento.value = atendimento.dataAtendimento
+				divDataAtendimento.disabled = true
+				divAtendimento.appendChild(divDataAtendimento)
+
+				//insere a div do usuario na div com a lista de usuarios
+				listarAtendimento.appendChild(divAtendimento)
+
+				const botaoConfirma = document.createElement('button')
+				botaoConfirma.innerText = 'Confirmar alterações'
+				botaoConfirma.style.visibility = 'hidden'
+				divAtendimento.appendChild(botaoConfirma)
+
+				botaoAtualizar.onclick = () => {
+					divTipoAtendimento.disabled = false
+					divDataAtendimento.disabled = false
+
+					botaoConfirma.style.visibility = 'unset'
+				}
+
+				botaoConfirma.onclick = () => {
+					if (!valida_cargo_ou_tipo(divTipoAtendimento) || !valida_data(divDataAtendimento)) {
+						return
+					}
+
+					divTipoAtendimento.disabled = true
+					divDataAtendimento.disabled = true
+					botaoConfirma.style.visibility = 'hidden'
+
+					atualizarAtendimento(atendimento.id, divTipoAtendimento.value, divDataAtendimento.value)
+				}
+			}
+		})
+}
+
+function atualizarAtendimento (id, tipo, data) {
+	console.log(id, tipo, data)
+}
+
+const excluirAtendimento = (idSelecionado) => {
+
+	fetch(url + 'atendimento/deletar/' + idSelecionado,
 		{
-			return response.text()
-		}
-		else
-		{
-			return response.text().then((text) =>
-			{
-				throw new Error(text)
-			})
-		}
-	})
-	.then((output) =>
-	{
-		console.log(output)
-		document.getElementById(excluir_atendimento)
-		.innerHTML='atendimento excluido com sucesso!';
-	})
-	.catch((error) =>
-	{
-		console.log(error)
-		document.getElementById(excluir_atendimento)
-		.innerHTML='erro ao excluir o atendimento!';
-	})
+			'method': 'POST',
+			'redirect': 'follow'
+		})
+		.then((response) => {
+			if (response.ok) {
+				return response.text()
+			}
+			else {
+				return response.text().then((text) => {
+					throw new Error(text)
+				})
+			}
+		})
+		.then((output) => {
+			console.log(output)
+			alert('atendimento excluido com sucesso!');
+		})
+		.catch((error) => {
+			console.log(error)
+			alert('erro ao excluir o atendimento!');
+		})
 }
 
 //funcionario
 
-const cadastrarFuncionario = () =>
-{
-	/*
+const cadastrarFuncionario = () => {
+
 	let nome = document.getElementById('nome-funcionario')
 	let telefone = document.getElementById('telefone-funcionario')
 	let email = document.getElementById('email-funcionario')
@@ -233,210 +283,229 @@ const cadastrarFuncionario = () =>
 		return
 	}
 
-	console.log(nome.value, telefone.value, email.value, cargo.value)
-	*/
-	
 	let bodyFuncionario =
 	{
-		'nomeFuncionario':         document.getElementById('nome-funcionario').value,
-		'telefoneFuncionario':         document.getElementById('telefone-funcionario').value,
-		'emailFuncionario': document.getElementById('email-funcionario').value
+		nome: nome.value,
+		telefone: telefone.value,
+		email: email.value,
+		cargo: cargo.value,
 	};
-	
+
 	fetch(url + "funcionario",
-	{
-		'method': 'POST',
-		'redirect': 'follow',
-		'headers':
 		{
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		},
-		'body': JSON.stringify(bodyFuncionario)
-	})
-	//checa se requisicao deu certo
-	.then((response) =>
-	{
-		if(response.ok)
-		{
-			return response.text()
-		}
-		else
-		{
-			return response.text().then((text) =>
+			'method': 'POST',
+			'redirect': 'follow',
+			'headers':
 			{
-				throw new Error(text)
-			})
-		}
-	})
-	//trata resposta
-	.then((output) =>
-	{
-		console.log(output)
-		alert('Cadastro efetuado!')
-	})
-	//trata erro
-	.catch((error) =>
-	{
-		console.log(error)
-		alert('Não foi possível efetuar o cadastro!')
-	})
-	
-}
-
-const mostrarFuncionario = () =>
-{
-	//da um GET no endpoint "funcionarios"
-	fetch(url + 'funcionario')
-	.then(response => response.json())
-	.then((funcionario) =>
-	{
-		//pega div que vai conter a lista de funcionarios
-		let mostrarFuncionario = document.getElementById('mostrar-funcionario')
-		
-		//limpa div
-		while(mostrarFuncionario.firstChild)
-		{
-			mostrarFuncionario.removeChild(mostrarFuncionario.firstChild)
-		}
-		
-		let idSelecionado = document.getElementById('id_funcionario')
-		
-		//preenche div com funcionarios recebidos do GET
-		for(let funcionario of Funcionario)
-		{
-			if(funcionario.id == idSelecionado)
-			{
-			//cria div para as informacoes de um funcionario
-			let divFuncionario = document.createElement('div')
-			divFuncionario.setAttribute('class', 'form')
-
-			//pega o nome do funcionario
-			let divNomeFuncionario = document.createElement('input')
-			divNomeFuncionario.placeholder = 'Nome Completo'
-			divNomeFuncionario.value = funcionario.nome
-			divFuncionario.appendChild(divNomeFuncionario)
-			
-			//pega o telefone do funcionario
-			let divTelefoneFuncionario = document.createElement('input')
-			divTelefoneFuncionario.placeholder = 'Telefone'
-			divTelefoneFuncionario.value = funcionario.telefone
-			divFuncionario.appendChild(divTelefoneFuncionario)
-			
-			//pega o email do funcionario
-			let divEmailFuncionario = document.createElement('input')
-			divEmailFuncionario.placeholder = 'Email'
-			divEmailFuncionario.value = funcionario.email
-			divFuncionario.appendChild(divEmailFuncionario)
-
-			//pega o cargo do funcionario
-			let divCargoFuncionario = document.createElement('input')
-			divCargoFuncionario.placeholder = 'Cargo'
-			divCargoFuncionario.value = funcionario.cargo
-			divFuncionario.appendChild(divCargoFuncionario)
-
-			//insere a div do funcionario na div com a lista de funcionarios
-			mostrarFuncionario.appendChild(divFuncionario)
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			},
+			'body': JSON.stringify(bodyFuncionario)
+		})
+		//checa se requisicao deu certo
+		.then((response) => {
+			if (response.ok) {
+				return response.text()
 			}
-		}
-	})
+			else {
+				return response.text().then((text) => {
+					throw new Error(text)
+				})
+			}
+		})
+		//trata resposta
+		.then((output) => {
+			console.log(output)
+			alert('Cadastro efetuado!')
+		})
+		//trata erro
+		.catch((error) => {
+			console.log(error)
+			alert('Não foi possível efetuar o cadastro!')
+		})
+
 }
 
-const listarFuncionarios = () =>
-{
+const mostrarFuncionario = () => {
 	//da um GET no endpoint "funcionarios"
 	fetch(url + 'funcionario')
-	.then(response => response.json())
-	.then((funcionario) =>
-	{
-		//pega div que vai conter a lista de funcionarios
-		let listarFuncionario = document.getElementById('listar-funcionarios')
-		
-		//limpa div
-		while(listarFuncionario.firstChild)
-		{
-			listarFuncionario.removeChild(listarFuncionario.firstChild)
-		}
-		
-		//preenche div com funcionarios recebidos do GET
-		for(let funcionario of Funcionario)
-		{
-			//cria div para as informacoes de um funcionario
-			let divFuncionario = document.createElement('div')
-			divFuncionario.setAttribute('class', 'form')
+		.then(response => response.json())
+		.then((funcionario) => {
+			//pega div que vai conter a lista de funcionarios
+			let mostrarFuncionario = document.getElementById('mostrar-funcionario')
 
-			//pega o nome do funcionario
-			let divNomeFuncionario = document.createElement('input')
-			divNomeFuncionario.placeholder = 'Nome Completo'
-			divNomeFuncionario.value = funcionario.nome
-			divFuncionario.appendChild(divNomeFuncionario)
-			
-			//pega o telefone do funcionario
-			let divTelefoneFuncionario = document.createElement('input')
-			divTelefoneFuncionario.placeholder = 'Telefone'
-			divTelefoneFuncionario.value = funcionario.telefone
-			divFuncionario.appendChild(divTelefoneFuncionario)
-			
-			//pega o email do funcionario
-			let divEmailFuncionario = document.createElement('input')
-			divEmailFuncionario.placeholder = 'Email'
-			divEmailFuncionario.value = funcionario.email
-			divFuncionario.appendChild(divEmailFuncionario)
+			//limpa div
+			while (mostrarFuncionario.firstChild) {
+				mostrarFuncionario.removeChild(mostrarFuncionario.firstChild)
+			}
 
-			//pega o cargo do funcionario
-			let divCargoFuncionario = document.createElement('input')
-			divCargoFuncionario.placeholder = 'Cargo'
-			divCargoFuncionario.value = funcionario.cargo
-			divFuncionario.appendChild(divCargoFuncionario)
+			let idSelecionado = document.getElementById('id_funcionario')
 
-			//insere a div do funcionario na div com a lista de funcionarios
-			listarFuncionario.appendChild(divFuncionario)
-		}
-	})
+			//preenche div com funcionarios recebidos do GET
+			for (let funcionario of Funcionario) {
+				if (funcionario.id == idSelecionado) {
+					//cria div para as informacoes de um funcionario
+					let divFuncionario = document.createElement('div')
+					divFuncionario.setAttribute('class', 'form')
+
+					//pega o nome do funcionario
+					let divNomeFuncionario = document.createElement('input')
+					divNomeFuncionario.placeholder = 'Nome Completo'
+					divNomeFuncionario.value = funcionario.nome
+					divFuncionario.appendChild(divNomeFuncionario)
+
+					//pega o telefone do funcionario
+					let divTelefoneFuncionario = document.createElement('input')
+					divTelefoneFuncionario.placeholder = 'Telefone'
+					divTelefoneFuncionario.value = funcionario.telefone
+					divFuncionario.appendChild(divTelefoneFuncionario)
+
+					//pega o email do funcionario
+					let divEmailFuncionario = document.createElement('input')
+					divEmailFuncionario.placeholder = 'Email'
+					divEmailFuncionario.value = funcionario.email
+					divFuncionario.appendChild(divEmailFuncionario)
+
+					//pega o cargo do funcionario
+					let divCargoFuncionario = document.createElement('input')
+					divCargoFuncionario.placeholder = 'Cargo'
+					divCargoFuncionario.value = funcionario.cargo
+					divFuncionario.appendChild(divCargoFuncionario)
+
+					//insere a div do funcionario na div com a lista de funcionarios
+					mostrarFuncionario.appendChild(divFuncionario)
+				}
+			}
+		})
 }
 
-const excluirFuncionario = () =>
-{
-	let idSelecionado = document.getElementById('id_funcionario')
+const listarFuncionarios = () => {
+	//da um GET no endpoint "funcionarios"
+	fetch(url + 'funcionario')
+		.then(response => response.json())
+		.then((funcionarios) => {
+			//pega div que vai conter a lista de funcionarios
+			let listarFuncionario = document.getElementById('listar-funcionarios')
 
-	fetch(url + 'funcionario/' + idSelecionado,
-	{
-		'method': 'DELETE',
-		'redirect': 'follow'
-	})
-	.then((response) =>
-	{
-		if(response.ok)
+			//limpa div
+			while (listarFuncionario.firstChild) {
+				listarFuncionario.removeChild(listarFuncionario.firstChild)
+			}
+
+			//preenche div com funcionarios recebidos do GET
+			for (let funcionario of funcionarios) {
+				//cria div para as informacoes de um funcionario
+				let divFuncionario = document.createElement('div')
+				divFuncionario.setAttribute('class', 'form')
+
+				const botaoDeletar = document.createElement('button')
+				botaoDeletar.innerText = 'Demitir'
+				botaoDeletar.onclick = () => {
+					listarFuncionario.removeChild(divFuncionario)
+					excluirFuncionario(funcionario.id)
+				}
+				divFuncionario.appendChild(botaoDeletar)
+
+				const botaoAtualizar = document.createElement('button')
+				botaoAtualizar.innerText = 'Atualizar'
+				divFuncionario.appendChild(botaoAtualizar)
+
+				//pega o nome do funcionario
+				let divNomeFuncionario = document.createElement('input')
+				divNomeFuncionario.placeholder = 'Nome Completo'
+				divNomeFuncionario.value = funcionario.nome
+				divNomeFuncionario.disabled = true
+				divFuncionario.appendChild(divNomeFuncionario)
+
+				//pega o telefone do funcionario
+				let divTelefoneFuncionario = document.createElement('input')
+				divTelefoneFuncionario.placeholder = 'Telefone'
+				divTelefoneFuncionario.value = funcionario.telefone
+				divTelefoneFuncionario.disabled = true
+				divFuncionario.appendChild(divTelefoneFuncionario)
+
+				//pega o email do funcionario
+				let divEmailFuncionario = document.createElement('input')
+				divEmailFuncionario.placeholder = 'Email'
+				divEmailFuncionario.value = funcionario.email
+				divEmailFuncionario.disabled = true
+				divFuncionario.appendChild(divEmailFuncionario)
+
+				//pega o cargo do funcionario
+				let divCargoFuncionario = document.createElement('input')
+				divCargoFuncionario.placeholder = 'Cargo'
+				divCargoFuncionario.value = funcionario.cargo
+				divCargoFuncionario.disabled = true
+				divFuncionario.appendChild(divCargoFuncionario)
+
+				//insere a div do funcionario na div com a lista de funcionarios
+				listarFuncionario.appendChild(divFuncionario)
+
+				const botaoConfirma = document.createElement('button')
+				botaoConfirma.innerText = 'Confirmar alterações'
+				botaoConfirma.style.visibility = 'hidden'
+				divFuncionario.appendChild(botaoConfirma)
+
+				botaoAtualizar.onclick = () => {
+					divNomeFuncionario.disabled = false
+					divTelefoneFuncionario.disabled = false
+					divEmailFuncionario.disabled = false
+					divCargoFuncionario.disabled = false
+
+					botaoConfirma.style.visibility = 'unset'
+				}
+
+				botaoConfirma.onclick = () => {
+					if (!valida_nome(divNomeFuncionario) || !valida_telefone(divTelefoneFuncionario) || !valida_email(divEmailFuncionario) || !valida_cargo_ou_tipo(divCargoFuncionario)) {
+						return
+					}
+
+					divNomeFuncionario.disabled = true
+					divTelefoneFuncionario.disabled = true
+					divEmailFuncionario.disabled = true
+					divCargoFuncionario.disabled = true
+					botaoConfirma.style.visibility = 'hidden'
+
+					atualizarFuncionario(funcionario.id, divNomeFuncionario.value, divTelefoneFuncionario.value, divEmailFuncionario.value, divCargoFuncionario.value)
+				}
+			}
+		})
+}
+
+function atualizarFuncionario(id, nome, telefone, email, cargo) {
+	console.log(id, nome, telefone, email, cargo)
+}
+
+const excluirFuncionario = (idSelecionado) => {
+
+	fetch(url + 'funcionario/deletar/' + idSelecionado,
 		{
-			return response.text()
-		}
-		else
-		{
-			return response.text().then((text) =>
-			{
-				throw new Error(text)
-			})
-		}
-	})
-	.then((output) =>
-	{
-		console.log(output)
-		document.getElementById(excluir_funcionario)
-		.innerHTML='funcionario excluido com sucesso!';
-	})
-	.catch((error) =>
-	{
-		console.log(error)
-		document.getElementById(excluir_funcionario)
-		.innerHTML='erro ao excluir o funcionario!';
-	})
+			'method': 'POST',
+			'redirect': 'follow'
+		})
+		.then((response) => {
+			if (response.ok) {
+				return response.text()
+			}
+			else {
+				return response.text().then((text) => {
+					throw new Error(text)
+				})
+			}
+		})
+		.then((output) => {
+			console.log(output)
+			alert('funcionario demitido com sucesso!')
+		})
+		.catch((error) => {
+			console.log(error)
+			alert('erro ao excluir o funcionario!')
+		})
 }
 
 //cliente
 
-const cadastrarCliente = (e) =>
-{
-	/*
+const cadastrarCliente = (e) => {
 	let nome = document.getElementById('nome-cliente')
 	let telefone = document.getElementById('telefone-cliente')
 	let email = document.getElementById('email-cliente')
@@ -445,191 +514,214 @@ const cadastrarCliente = (e) =>
 		return
 	}
 
-	console.log(nome.value, telefone.value, email.value)
-	*/
-	
 	let bodyCliente =
 	{
-		'nomeCliente':         document.getElementById('nome-cliente').value,
-		'telefoneCliente':         document.getElementById('telefone-cliente').value,
-		'emailCliente': document.getElementById('email-cliente').value
+		nome: nome.value,
+		telefone: telefone.value,
+		email: email.value
 	};
-	
+
 	fetch(url + "cliente",
-	{
-		'method': 'POST',
-		'redirect': 'follow',
-		'headers':
 		{
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		},
-		'body': JSON.stringify(bodyCliente)
-	})
-	//checa se requisicao deu certo
-	.then((response) =>
-	{
-		if(response.ok)
-		{
-			return response.text()
-		}
-		else
-		{
-			return response.text().then((text) =>
+			'method': 'POST',
+			'redirect': 'follow',
+			'headers':
 			{
-				throw new Error(text)
-			})
-		}
-	})
-	//trata resposta
-	.then((output) =>
-	{
-		console.log(output)
-		alert('Cadastro efetuado!')
-	})
-	//trata erro
-	.catch((error) =>
-	{
-		console.log(error)
-		alert('Não foi possível efetuar o cadastro!')
-	})
-	
-}
-
-const mostrarCliente = () =>
-{
-	//da um GET no endpoint "clientes"
-	fetch(url + 'cliente')
-	.then(response => response.json())
-	.then((cliente) =>
-	{
-		//pega div que vai conter a lista de clientes
-		let mostrarCliente = document.getElementById('mostrar-cliente')
-		
-		//limpa div
-		while(mostrarCliente.firstChild)
-		{
-			mostrarCliente.removeChild(mostrarCliente.firstChild)
-		}
-
-		let idSelecionado = document.getElementById('id_cliente')
-		
-		//preenche div com clientes recebidos do GET
-		for(let cliente of Cliente)
-		{
-			if(cliente.id == idSelecionado)
-			{
-			//cria div para as informacoes de um cliente
-			let divCliente = document.createElement('div')
-			divCliente.setAttribute('class', 'form')
-
-			//pega o nome do cliente
-			let divNomeCliente = document.createElement('input')
-			divNomeCliente.placeholder = 'Nome Completo'
-			divNomeCliente.value = cliente.nome
-			divCliente.appendChild(divNomeCliente)
-			
-			//pega o telefone do cliente
-			let divTelefoneCliente = document.createElement('input')
-			divTelefoneCliente.placeholder = 'Telefone'
-			divTelefoneCliente.value = cliente.telefone
-			divCliente.appendChild(divTelefoneCliente)
-			
-			//pega o email do cliente
-			let divEmailCliente = document.createElement('input')
-			divEmailCliente.placeholder = 'Email'
-			divEmailCliente.value = cliente.email
-			divCliente.appendChild(divEmailCliente)
-
-			//insere a div do cliente na div com a lista de clientes
-			mostrarCliente.appendChild(divCliente)
+				'Content-Type': 'application/json',
+				'Accept': 'application/json'
+			},
+			'body': JSON.stringify(bodyCliente)
+		})
+		//checa se requisicao deu certo
+		.then((response) => {
+			if (response.ok) {
+				return response.text()
 			}
-		}
-	})
+			else {
+				return response.text().then((text) => {
+					throw new Error(text)
+				})
+			}
+		})
+		//trata resposta
+		.then((output) => {
+			console.log(output)
+			alert('Cadastro efetuado!')
+		})
+		//trata erro
+		.catch((error) => {
+			console.log(error)
+			alert('Não foi possível efetuar o cadastro!')
+		})
+
 }
 
-const listarClientes = () =>
-{
+const mostrarCliente = () => {
 	//da um GET no endpoint "clientes"
 	fetch(url + 'cliente')
-	.then(response => response.json())
-	.then((cliente) =>
-	{
-		//pega div que vai conter a lista de clientes
-		let listarCliente = document.getElementById('listar-clientes')
-		
-		//limpa div
-		while(listarCliente.firstChild)
-		{
-			listarCliente.removeChild(listarCliente.firstChild)
-		}
-		
-		//preenche div com clientes recebidos do GET
-		for(let cliente of Cliente)
-		{
-			//cria div para as informacoes de um cliente
-			let divCliente = document.createElement('div')
-			divCliente.setAttribute('class', 'form')
+		.then(response => response.json())
+		.then((cliente) => {
+			//pega div que vai conter a lista de clientes
+			let mostrarCliente = document.getElementById('mostrar-cliente')
 
-			//pega o nome do cliente
-			let divNomeCliente = document.createElement('input')
-			divNomeCliente.placeholder = 'Nome Completo'
-			divNomeCliente.value = cliente.nome
-			divCliente.appendChild(divNomeCliente)
-			
-			//pega o telefone do cliente
-			let divTelefoneCliente = document.createElement('input')
-			divTelefoneCliente.placeholder = 'Telefone'
-			divTelefoneCliente.value = cliente.telefone
-			divCliente.appendChild(divTelefoneCliente)
-			
-			//pega o email do cliente
-			let divEmailCliente = document.createElement('input')
-			divEmailCliente.placeholder = 'Email'
-			divEmailCliente.value = cliente.email
-			divCliente.appendChild(divEmailCliente)
+			//limpa div
+			while (mostrarCliente.firstChild) {
+				mostrarCliente.removeChild(mostrarCliente.firstChild)
+			}
 
-			//insere a div do cliente na div com a lista de clientes
-			listarCliente.appendChild(divCliente)
-		}
-	})
+			let idSelecionado = document.getElementById('id_cliente')
+
+			//preenche div com clientes recebidos do GET
+			for (let cliente of Cliente) {
+				if (cliente.id == idSelecionado) {
+					//cria div para as informacoes de um cliente
+					let divCliente = document.createElement('div')
+					divCliente.setAttribute('class', 'form')
+
+					//pega o nome do cliente
+					let divNomeCliente = document.createElement('input')
+					divNomeCliente.placeholder = 'Nome Completo'
+					divNomeCliente.value = cliente.nome
+					divCliente.appendChild(divNomeCliente)
+
+					//pega o telefone do cliente
+					let divTelefoneCliente = document.createElement('input')
+					divTelefoneCliente.placeholder = 'Telefone'
+					divTelefoneCliente.value = cliente.telefone
+					divCliente.appendChild(divTelefoneCliente)
+
+					//pega o email do cliente
+					let divEmailCliente = document.createElement('input')
+					divEmailCliente.placeholder = 'Email'
+					divEmailCliente.value = cliente.email
+					divCliente.appendChild(divEmailCliente)
+
+					//insere a div do cliente na div com a lista de clientes
+					mostrarCliente.appendChild(divCliente)
+				}
+			}
+		})
 }
 
-const excluirCliente = () =>
-{
-	let idSelecionado = document.getElementById('id_cliente')
+const listarClientes = () => {
+	//da um GET no endpoint "clientes"
+	fetch(url + 'cliente')
+		.then(response => response.json())
+		.then((clientes) => {
+			//pega div que vai conter a lista de clientes
+			let listarCliente = document.getElementById('listar-clientes')
 
-	fetch(url + 'cliente/' + idSelecionado,
-	{
-		'method': 'DELETE',
-		'redirect': 'follow'
-	})
-	.then((response) =>
-	{
-		if(response.ok)
+			//limpa div
+			while (listarCliente.firstChild) {
+				listarCliente.removeChild(listarCliente.firstChild)
+			}
+
+
+			//preenche div com clientes recebidos do GET
+			for (let cliente of clientes) {
+				//cria div para as informacoes de um cliente
+				let divCliente = document.createElement('div')
+				divCliente.setAttribute('class', 'form')
+
+
+				const botaoDeletar = document.createElement('button')
+				botaoDeletar.innerText = 'Apagar'
+				botaoDeletar.onclick = () => {
+					listarCliente.removeChild(divCliente)
+					excluirCliente(cliente.id)
+				}
+				divCliente.appendChild(botaoDeletar)
+
+				const botaoAtualizar = document.createElement('button')
+				botaoAtualizar.innerText = 'Atualizar'
+				divCliente.appendChild(botaoAtualizar)
+
+				//pega o nome do cliente
+				let divNomeCliente = document.createElement('input')
+				divNomeCliente.placeholder = 'Nome Completo'
+				divNomeCliente.disabled = true
+				divNomeCliente.value = cliente.nome
+				divCliente.appendChild(divNomeCliente)
+
+				//pega o telefone do cliente
+				let divTelefoneCliente = document.createElement('input')
+				divTelefoneCliente.placeholder = 'Telefone'
+				divTelefoneCliente.disabled = true
+				divTelefoneCliente.value = cliente.telefone
+				divCliente.appendChild(divTelefoneCliente)
+
+				//pega o email do cliente
+				let divEmailCliente = document.createElement('input')
+				divEmailCliente.placeholder = 'Email'
+				divEmailCliente.disabled = true
+				divEmailCliente.value = cliente.email
+				divCliente.appendChild(divEmailCliente)
+
+				//insere a div do cliente na div com a lista de clientes
+				listarCliente.appendChild(divCliente)
+
+				const botaoConfirma = document.createElement('button')
+				botaoConfirma.innerText = 'Confirmar alterações'
+				botaoConfirma.style.visibility = 'hidden'
+				divCliente.appendChild(botaoConfirma)
+
+				botaoAtualizar.onclick = () => {
+					divNomeCliente.disabled = false
+					divTelefoneCliente.disabled = false
+					divEmailCliente.disabled = false
+
+					botaoConfirma.style.visibility = 'unset'
+
+
+				}
+
+				botaoConfirma.onclick = () => {
+					if (!valida_nome(divNomeCliente) || !valida_telefone(divTelefoneCliente) || !valida_email(divEmailCliente)) {
+						return
+					}
+
+					divNomeCliente.disabled = true
+					divTelefoneCliente.disabled = true
+					divEmailCliente.disabled = true
+					botaoConfirma.style.visibility = 'hidden'
+
+					atualizarCliente(cliente.id, divNomeCliente.value, divTelefoneCliente.value, divEmailCliente.value)
+				}
+			}
+		})
+}
+
+function atualizarCliente (id, nome, telefone, email) {
+	console.log(id, nome, email, telefone)
+}
+
+const excluirCliente = (idSelecionado) => {
+
+	fetch(url + 'cliente/deletar/' + idSelecionado,
 		{
-			return response.text()
-		}
-		else
-		{
-			return response.text().then((text) =>
-			{
-				throw new Error(text)
-			})
-		}
-	})
-	.then((output) =>
-	{
-		console.log(output)
-		document.getElementById(excluir_cliente)
-		.innerHTML='cliente excluido com sucesso!';
-	})
-	.catch((error) =>
-	{
-		console.log(error)
-		document.getElementById(excluir_cliente)
-		.innerHTML='erro ao excluir o cliente!';
-	})
+			'method': 'POST',
+			'redirect': 'follow'
+		})
+		.then((response) => {
+			if (response.ok) {
+				return response.text()
+			}
+			else {
+				return response.text().then((text) => {
+					throw new Error(text)
+				})
+			}
+		})
+		.then((output) => {
+			console.log(output)
+			document.getElementById(excluir_cliente)
+				.innerHTML = 'cliente excluido com sucesso!';
+		})
+		.catch((error) => {
+			console.log(error)
+			document.getElementById(excluir_cliente)
+				.innerHTML = 'erro ao excluir o cliente!';
+		})
 }
 
 // validações

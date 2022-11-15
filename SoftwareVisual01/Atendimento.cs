@@ -14,4 +14,15 @@ namespace Salao
         public string? tipo {get; set;}
         public DateTime dataAtendimento {get; set;}
     }
+
+    class AtendimentoRetorno 
+    {
+        public long id {get; set;}
+        public long idCliente {get; set;}
+        public string? nomeCliente {get; set;}
+        public long idFuncionario {get; set;}
+        public string? nomeFuncionario {get; set;}
+        public string? tipo {get; set;}
+        public DateTime dataAtendimento {get; set;}
+    }
 }

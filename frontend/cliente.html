@@ -7,9 +7,9 @@
 		<title>T2 Programação Visual</title>
 		<link rel="stylesheet" href="./style/style.css">
 		<link rel="stylesheet" href="./style/stylelog.scss">
-		<script src="script.js"></script>
+		<script src="./script/script.js"></script>
 	</head>
-	<body>
+	<body onload="listarClientes()">
 		<div class="entire_menu">
 			<input type="checkbox" id="change-hamburguer" />
 		<a class="hamburguer" href="#">
@@ -27,6 +27,8 @@
 		<div class="form">
 			<h2>Listagem de clientes</h2>
 			<a href="./cadastrar_cliente.html">Cadastrar cliente</a>
+
+			<div id="listar-clientes"></div>
 		</div>
 	</body>
 </html>
