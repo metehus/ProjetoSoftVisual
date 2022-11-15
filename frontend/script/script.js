@@ -3,6 +3,8 @@
  * Funções
  */
 
+var url = 'http://localhost:3000/'
+
 //atendimento
 
 const cadastrarAtendimento = () =>
