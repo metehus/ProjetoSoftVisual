@@ -7,6 +7,7 @@
 
 const cadastrarAtendimento = () =>
 {
+	/*
 	let idCliente = document.getElementById('id-cliente')
 	let idFuncionario = document.getElementById('id-funcionario')
 	let tipo = document.getElementById('tipo-atendimento')
@@ -17,6 +18,55 @@ const cadastrarAtendimento = () =>
 	}
 
 	console.log(idCliente.value, idFuncionario.value, tipo.value, data.value)
+	*/
+	
+	let bodyAtendimento =
+	{
+		'idCliente':         document.getElementById('id-cliente').value,
+		'idFuncionario':         document.getElementById('id-funcionario').value,
+		'tipoAtendimento': document.getElementById('tipo-atendimento').value,
+		'dataAtendimento':       document.getElementById('data-atendimento').value
+	};
+	
+	fetch(url + "atendimento",
+	{
+		'method': 'POST',
+		'redirect': 'follow',
+		'headers':
+		{
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		'body': JSON.stringify(bodyAtendimento)
+	})
+	//checa se requisicao deu certo
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	//trata resposta
+	.then((output) =>
+	{
+		console.log(output)
+		alert('evento efetuado!')
+	})
+	//trata erro
+	.catch((error) =>
+	{
+		console.log(error)
+		alert('Não foi possível efetuar o evento!')
+	})
+	
 }
 
 const mostrarAtendimento = () =>
@@ -139,6 +189,7 @@ const excluirAtendimento = () =>
 
 const cadastrarFuncionario = () =>
 {
+	/*
 	let nome = document.getElementById('nome-funcionario')
 	let telefone = document.getElementById('telefone-funcionario')
 	let email = document.getElementById('email-funcionario')
@@ -149,6 +200,54 @@ const cadastrarFuncionario = () =>
 	}
 
 	console.log(nome.value, telefone.value, email.value, cargo.value)
+	*/
+	
+	let bodyFuncionario =
+	{
+		'nomeFuncionario':         document.getElementById('nome-funcionario').value,
+		'telefoneFuncionario':         document.getElementById('telefone-funcionario').value,
+		'emailFuncionario': document.getElementById('email-funcionario').value
+	};
+	
+	fetch(url + "funcionario",
+	{
+		'method': 'POST',
+		'redirect': 'follow',
+		'headers':
+		{
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		'body': JSON.stringify(bodyFuncionario)
+	})
+	//checa se requisicao deu certo
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	//trata resposta
+	.then((output) =>
+	{
+		console.log(output)
+		alert('Cadastro efetuado!')
+	})
+	//trata erro
+	.catch((error) =>
+	{
+		console.log(error)
+		alert('Não foi possível efetuar o cadastro!')
+	})
+	
 }
 
 const mostrarFuncionario = () =>
@@ -269,6 +368,7 @@ const excluirFuncionario = () =>
 
 const cadastrarCliente = (e) =>
 {
+	/*
 	let nome = document.getElementById('nome-cliente')
 	let telefone = document.getElementById('telefone-cliente')
 	let email = document.getElementById('email-cliente')
@@ -278,6 +378,54 @@ const cadastrarCliente = (e) =>
 	}
 
 	console.log(nome.value, telefone.value, email.value)
+	*/
+	
+	let bodyCliente =
+	{
+		'nomeCliente':         document.getElementById('nome-cliente').value,
+		'telefoneCliente':         document.getElementById('telefone-cliente').value,
+		'emailCliente': document.getElementById('email-cliente').value
+	};
+	
+	fetch(url + "cliente",
+	{
+		'method': 'POST',
+		'redirect': 'follow',
+		'headers':
+		{
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		},
+		'body': JSON.stringify(bodyCliente)
+	})
+	//checa se requisicao deu certo
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	//trata resposta
+	.then((output) =>
+	{
+		console.log(output)
+		alert('Cadastro efetuado!')
+	})
+	//trata erro
+	.catch((error) =>
+	{
+		console.log(error)
+		alert('Não foi possível efetuar o cadastro!')
+	})
+	
 }
 
 const mostrarCliente = () =>
