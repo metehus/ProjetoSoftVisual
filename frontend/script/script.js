@@ -266,6 +266,8 @@ const mostrarFuncionario = () =>
 			mostrarFuncionario.removeChild(mostrarFuncionario.firstChild)
 		}
 		
+		let idSelecionado = document.getElementById('id_funcionario')
+		
 		//preenche div com funcionarios recebidos do GET
 		for(let funcionario of Funcionario)
 		{
