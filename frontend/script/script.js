@@ -239,12 +239,12 @@ const listarAtentimentos = () => {
 		})
 }
 
-function atualizarAtendimento = (id, tipo, data) =>
+function atualizarAtendimento (id, tipo, data)
 {
 	let body =
 	    {
-		    'tipo' = tipo,
-		    'data' = data
+		    'tipo' : tipo,
+		    'data' : data
 	    }
 	
 	fetch(url + "atendimento/atualizar/" + id,
@@ -284,7 +284,7 @@ function atualizarAtendimento = (id, tipo, data) =>
 	})
 }
 	
-}
+
 
 const excluirAtendimento = (idSelecionado) => {
 
@@ -518,10 +518,10 @@ const listarFuncionarios = () => {
 function atualizarFuncionario(id, nome, telefone, email, cargo) {
 	let body =
 	    {
-		    'nome' = nome,
-		    'telefone' = telefone,
-		    'email' = email,
-		    'cargo' = cargo
+		    'nome' : nome,
+		    'telefone' : telefone,
+		    'email' : email,
+		    'cargo' : cargo
 	    }
 	
 	fetch(url + "funcionario/atualizar/" + id,
@@ -779,9 +779,9 @@ const listarClientes = () => {
 function atualizarCliente (id, nome, telefone, email) {
 	let body =
 	    {
-		    'nome' = nome,
-		    'telefone' = telefone,
-		    'email' = email
+		    'nome' : nome,
+		    'telefone' : telefone,
+		    'email' : email
 	    }
 	
 	fetch(url + "cliente/atualizar/" + id,
@@ -917,3 +917,4 @@ function valida_data({ value, classList }) {
 	classList.remove('erro-input')
 	return true
 }
+
