@@ -182,7 +182,39 @@ const listarAtentimentos = () =>
 
 const excluirAtendimento = () =>
 {
-	//codigo
+	let idSelecionado = document.getElementById('id_atendimento')
+
+	fetch(url + 'atendimento/' + idSelecionado,
+	{
+		'method': 'DELETE',
+		'redirect': 'follow'
+	})
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	.then((output) =>
+	{
+		console.log(output)
+		document.getElementById(excluir_atendimento)
+		.innerHTML='atendimento excluido com sucesso!';
+	})
+	.catch((error) =>
+	{
+		console.log(error)
+		document.getElementById(excluir_atendimento)
+		.innerHTML='erro ao excluir o atendimento!';
+	})
 }
 
 //funcionario
@@ -363,7 +395,39 @@ const listarFuncionarios = () =>
 
 const excluirFuncionario = () =>
 {
-	//codigo
+	let idSelecionado = document.getElementById('id_funcionario')
+
+	fetch(url + 'funcionario/' + idSelecionado,
+	{
+		'method': 'DELETE',
+		'redirect': 'follow'
+	})
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	.then((output) =>
+	{
+		console.log(output)
+		document.getElementById(excluir_funcionario)
+		.innerHTML='funcionario excluido com sucesso!';
+	})
+	.catch((error) =>
+	{
+		console.log(error)
+		document.getElementById(excluir_funcionario)
+		.innerHTML='erro ao excluir o funcionario!';
+	})
 }
 
 //cliente
@@ -531,7 +595,39 @@ const listarClientes = () =>
 
 const excluirCliente = () =>
 {
-	//codigo
+	let idSelecionado = document.getElementById('id_cliente')
+
+	fetch(url + 'cliente/' + idSelecionado,
+	{
+		'method': 'DELETE',
+		'redirect': 'follow'
+	})
+	.then((response) =>
+	{
+		if(response.ok)
+		{
+			return response.text()
+		}
+		else
+		{
+			return response.text().then((text) =>
+			{
+				throw new Error(text)
+			})
+		}
+	})
+	.then((output) =>
+	{
+		console.log(output)
+		document.getElementById(excluir_cliente)
+		.innerHTML='cliente excluido com sucesso!';
+	})
+	.catch((error) =>
+	{
+		console.log(error)
+		document.getElementById(excluir_cliente)
+		.innerHTML='erro ao excluir o cliente!';
+	})
 }
 
 // validações
