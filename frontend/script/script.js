@@ -153,7 +153,58 @@ const cadastrarFuncionario = () =>
 
 const mostrarFuncionario = () =>
 {
-	//codigo
+	//da um GET no endpoint "funcionarios"
+	fetch(url + 'funcionario')
+	.then(response => response.json())
+	.then((funcionario) =>
+	{
+		//pega div que vai conter a lista de funcionarios
+		let mostrarFuncionario = document.getElementById('mostrar-funcionario')
+		
+		//limpa div
+		while(mostrarFuncionario.firstChild)
+		{
+			mostrarFuncionario.removeChild(mostrarFuncionario.firstChild)
+		}
+		
+		//preenche div com funcionarios recebidos do GET
+		for(let funcionario of Funcionario)
+		{
+			if(funcionario.id == idSelecionado)
+			{
+			//cria div para as informacoes de um funcionario
+			let divFuncionario = document.createElement('div')
+			divFuncionario.setAttribute('class', 'form')
+
+			//pega o nome do funcionario
+			let divNomeFuncionario = document.createElement('input')
+			divNomeFuncionario.placeholder = 'Nome Completo'
+			divNomeFuncionario.value = funcionario.nome
+			divFuncionario.appendChild(divNomeFuncionario)
+			
+			//pega o telefone do funcionario
+			let divTelefoneFuncionario = document.createElement('input')
+			divTelefoneFuncionario.placeholder = 'Telefone'
+			divTelefoneFuncionario.value = funcionario.telefone
+			divFuncionario.appendChild(divTelefoneFuncionario)
+			
+			//pega o email do funcionario
+			let divEmailFuncionario = document.createElement('input')
+			divEmailFuncionario.placeholder = 'Email'
+			divEmailFuncionario.value = funcionario.email
+			divFuncionario.appendChild(divEmailFuncionario)
+
+			//pega o cargo do funcionario
+			let divCargoFuncionario = document.createElement('input')
+			divCargoFuncionario.placeholder = 'Cargo'
+			divCargoFuncionario.value = funcionario.cargo
+			divFuncionario.appendChild(divCargoFuncionario)
+
+			//insere a div do funcionario na div com a lista de funcionarios
+			mostrarFuncionario.appendChild(divFuncionario)
+			}
+		}
+	})
 }
 
 const listarFuncionarios = () =>
@@ -231,7 +282,54 @@ const cadastrarCliente = (e) =>
 
 const mostrarCliente = () =>
 {
-	//codigo
+	//da um GET no endpoint "clientes"
+	fetch(url + 'cliente')
+	.then(response => response.json())
+	.then((cliente) =>
+	{
+		//pega div que vai conter a lista de clientes
+		let mostrarCliente = document.getElementById('mostrar-cliente')
+		
+		//limpa div
+		while(mostrarCliente.firstChild)
+		{
+			mostrarCliente.removeChild(mostrarCliente.firstChild)
+		}
+
+		let idSelecionado = document.getElementById('id_cliente')
+		
+		//preenche div com clientes recebidos do GET
+		for(let cliente of Cliente)
+		{
+			if(cliente.id == idSelecionado)
+			{
+			//cria div para as informacoes de um cliente
+			let divCliente = document.createElement('div')
+			divCliente.setAttribute('class', 'form')
+
+			//pega o nome do cliente
+			let divNomeCliente = document.createElement('input')
+			divNomeCliente.placeholder = 'Nome Completo'
+			divNomeCliente.value = cliente.nome
+			divCliente.appendChild(divNomeCliente)
+			
+			//pega o telefone do cliente
+			let divTelefoneCliente = document.createElement('input')
+			divTelefoneCliente.placeholder = 'Telefone'
+			divTelefoneCliente.value = cliente.telefone
+			divCliente.appendChild(divTelefoneCliente)
+			
+			//pega o email do cliente
+			let divEmailCliente = document.createElement('input')
+			divEmailCliente.placeholder = 'Email'
+			divEmailCliente.value = cliente.email
+			divCliente.appendChild(divEmailCliente)
+
+			//insere a div do cliente na div com a lista de clientes
+			mostrarCliente.appendChild(divCliente)
+			}
+		}
+	})
 }
 
 const listarClientes = () =>
